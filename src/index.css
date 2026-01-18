@@ -1,0 +1,5 @@
+/* Reset podstawowy - Bootstrap obsługuje resztę */
+body {
+  margin: 0;
+  min-width: 320px;
+}
