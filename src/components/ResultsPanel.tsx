@@ -71,7 +71,7 @@ export function ResultsPanel({ result }: ResultsPanelProps) {
       const hasBothValues = payload.length === 2 && ryczaltValue > 0 && skalaValue > 0;
 
       return (
-        <div className="bg-white border rounded p-2 shadow-sm">
+        <div className="bg-body border rounded p-2 shadow-sm">
           <p className="fw-bold mb-1">{label}</p>
           {payload.map((entry, index) => (
             <p key={index} className="mb-0 small" style={{ color: entry.color }}>
@@ -202,16 +202,16 @@ export function ResultsPanel({ result }: ResultsPanelProps) {
         {/* Tabela porównawcza */}
         <div className="table-responsive">
           <table className="table table-bordered">
-            <thead className="table-light">
+            <thead className="table-header-adaptive">
               <tr>
                 <th></th>
                 <th
-                  className={`text-center ${isRyczaltBetter ? 'table-success' : ''}`}
+                  className={`text-center ${isRyczaltBetter ? 'table-row-success' : ''}`}
                 >
                   Ryczałt 12%
                 </th>
                 <th
-                  className={`text-center ${!isRyczaltBetter ? 'table-success' : ''}`}
+                  className={`text-center ${!isRyczaltBetter ? 'table-row-success' : ''}`}
                 >
                   Skala Podatkowa
                 </th>
@@ -232,7 +232,7 @@ export function ResultsPanel({ result }: ResultsPanelProps) {
                   -{formatPLN(skala.skladkiSpoleczne)}
                 </td>
               </tr>
-              <tr className="table-light">
+              <tr className="table-row-adaptive">
                 <td>Dochód (przychód - składki)</td>
                 <td className="text-end">
                   {formatPLN(ryczalt.przychod - ryczalt.skladkiSpoleczne)}
@@ -260,7 +260,7 @@ export function ResultsPanel({ result }: ResultsPanelProps) {
                 </td>
                 <td className="text-end text-muted">-</td>
               </tr>
-              <tr className="table-light">
+              <tr className="table-row-adaptive">
                 <td>Podstawa opodatkowania</td>
                 <td className="text-end">
                   {formatPLN(ryczalt.podstawaOpodatkowania)}
@@ -278,7 +278,7 @@ export function ResultsPanel({ result }: ResultsPanelProps) {
                   -{formatPLN(skala.podatek)}
                 </td>
               </tr>
-              <tr className="table-primary fw-bold">
+              <tr className="bg-highlight-row fw-bold">
                 <td>Netto "na rękę"</td>
                 <td
                   className={`text-end ${isRyczaltBetter ? 'text-success' : ''}`}
@@ -298,7 +298,7 @@ export function ResultsPanel({ result }: ResultsPanelProps) {
         {/* Szczegóły obliczeń */}
         <div className="row mt-4">
           <div className="col-md-6">
-            <div className="card bg-light">
+            <div className="card bg-body-secondary">
               <div className="card-body">
                 <h6 className="card-title">Ryczałt 12% - szczegóły</h6>
                 <ul className="list-unstyled mb-0 small">
@@ -315,7 +315,7 @@ export function ResultsPanel({ result }: ResultsPanelProps) {
             </div>
           </div>
           <div className="col-md-6">
-            <div className="card bg-light">
+            <div className="card bg-body-secondary">
               <div className="card-body">
                 <h6 className="card-title">Skala Podatkowa - szczegóły</h6>
                 <ul className="list-unstyled mb-0 small">

@@ -105,25 +105,25 @@ export function MonthRow({
           <td className="text-end small text-muted border-start">
             {formatPLN(breakdown.skladkiZusBezChorobowej)}
           </td>
-          <td className="text-end small" style={{ backgroundColor: breakdown.skladkaChorobowa > 0 ? '#e0f7fa' : undefined }}>
+          <td className={`text-end small ${breakdown.skladkaChorobowa > 0 ? 'bg-sickness' : ''}`}>
             {formatPLN(breakdown.skladkaChorobowa)}
           </td>
-          <td className="text-end small border-start" style={{ backgroundColor: '#e8f5e9' }}>
+          <td className="text-end small border-start bg-ryczalt">
             {formatPLN(breakdown.ryczalt.skladkaZdrowotna)}
           </td>
-          <td className="text-end small" style={{ backgroundColor: '#e8f5e9' }}>
+          <td className="text-end small bg-ryczalt">
             {formatPLN(breakdown.ryczalt.podatek)}
           </td>
-          <td className="text-end small fw-medium" style={{ backgroundColor: '#c8e6c9' }}>
+          <td className="text-end small fw-medium bg-ryczalt-strong">
             {formatPLN(breakdown.ryczalt.netto)}
           </td>
-          <td className="text-end small border-start" style={{ backgroundColor: '#e3f2fd' }}>
+          <td className="text-end small border-start bg-skala">
             {formatPLN(breakdown.skala.skladkaZdrowotna)}
           </td>
-          <td className="text-end small" style={{ backgroundColor: '#e3f2fd' }}>
+          <td className="text-end small bg-skala">
             {formatPLN(breakdown.skala.podatek)}
           </td>
-          <td className="text-end small fw-medium" style={{ backgroundColor: '#bbdefb' }}>
+          <td className="text-end small fw-medium bg-skala-strong">
             {formatPLN(breakdown.skala.netto)}
           </td>
         </>

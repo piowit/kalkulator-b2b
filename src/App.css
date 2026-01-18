@@ -1,1 +1,106 @@
-/* Kalkulator Podatkowy B2B - minimalne style */
+/* Kalkulator Podatkowy B2B - style */
+
+/* Kolory dla Ryczałt (zielone) */
+.bg-ryczalt {
+  background-color: rgba(76, 175, 80, 0.15) !important;
+}
+.bg-ryczalt-strong {
+  background-color: rgba(76, 175, 80, 0.25) !important;
+}
+
+/* Kolory dla Skala (niebieskie) */
+.bg-skala {
+  background-color: rgba(33, 150, 243, 0.15) !important;
+}
+.bg-skala-strong {
+  background-color: rgba(33, 150, 243, 0.25) !important;
+}
+
+/* Kolor dla składki chorobowej */
+.bg-sickness {
+  background-color: rgba(0, 188, 212, 0.15) !important;
+}
+
+/* Kolory ostrzeżeń (żółte) */
+.bg-warning-subtle-custom {
+  background-color: rgba(255, 193, 7, 0.2) !important;
+}
+
+/* Kolory sukcesu (zielone) dla sekcji 100% zasiłku */
+.bg-success-subtle-custom {
+  background-color: rgba(25, 135, 84, 0.15) !important;
+}
+
+/* Dark mode - zwiększ opacity dla lepszej widoczności */
+[data-bs-theme="dark"] .bg-ryczalt {
+  background-color: rgba(76, 175, 80, 0.2) !important;
+}
+[data-bs-theme="dark"] .bg-ryczalt-strong {
+  background-color: rgba(76, 175, 80, 0.35) !important;
+}
+[data-bs-theme="dark"] .bg-skala {
+  background-color: rgba(33, 150, 243, 0.2) !important;
+}
+[data-bs-theme="dark"] .bg-skala-strong {
+  background-color: rgba(33, 150, 243, 0.35) !important;
+}
+[data-bs-theme="dark"] .bg-sickness {
+  background-color: rgba(0, 188, 212, 0.2) !important;
+}
+[data-bs-theme="dark"] .bg-warning-subtle-custom {
+  background-color: rgba(255, 193, 7, 0.25) !important;
+}
+[data-bs-theme="dark"] .bg-success-subtle-custom {
+  background-color: rgba(25, 135, 84, 0.2) !important;
+}
+
+/* Wyróżniony wiersz (netto na rękę) */
+.bg-highlight-row {
+  background-color: rgba(13, 110, 253, 0.15) !important;
+}
+[data-bs-theme="dark"] .bg-highlight-row {
+  background-color: rgba(13, 110, 253, 0.25) !important;
+}
+
+/* Adaptywne warianty tabel */
+.table-row-info {
+  background-color: rgba(13, 202, 240, 0.15) !important;
+}
+[data-bs-theme="dark"] .table-row-info {
+  background-color: rgba(13, 202, 240, 0.2) !important;
+}
+
+.table-row-warning {
+  background-color: rgba(255, 193, 7, 0.15) !important;
+}
+[data-bs-theme="dark"] .table-row-warning {
+  background-color: rgba(255, 193, 7, 0.2) !important;
+}
+
+.table-row-success {
+  background-color: rgba(25, 135, 84, 0.15) !important;
+}
+[data-bs-theme="dark"] .table-row-success {
+  background-color: rgba(25, 135, 84, 0.2) !important;
+}
+
+/* Adaptywny nagłówek tabeli */
+.table-header-adaptive {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+[data-bs-theme="dark"] .table-header-adaptive {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Adaptywny wiersz tabeli */
+.table-row-adaptive {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+}
+[data-bs-theme="dark"] .table-row-adaptive {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Smooth transition dla zmiany motywu */
+* {
+  transition: background-color 0.2s ease;
+}

@@ -48,7 +48,7 @@ export function MonthlyForm({
         </p>
         <div className="table-responsive">
           <table className="table table-hover table-sm mb-0">
-            <thead className="table-light">
+            <thead className="table-header-adaptive">
               <tr>
                 <th>Miesiąc</th>
                 <th>Przychód</th>
@@ -70,9 +70,8 @@ export function MonthlyForm({
                       </span>
                     </th>
                     <th
-                      className="text-end border-start"
+                      className="text-end border-start bg-ryczalt"
                       colSpan={3}
-                      style={{ backgroundColor: '#e8f5e9' }}
                     >
                       <span className="d-flex align-items-center justify-content-end">
                         Ryczałt 12%
@@ -80,9 +79,8 @@ export function MonthlyForm({
                       </span>
                     </th>
                     <th
-                      className="text-end border-start"
+                      className="text-end border-start bg-skala"
                       colSpan={3}
-                      style={{ backgroundColor: '#e3f2fd' }}
                     >
                       <span className="d-flex align-items-center justify-content-end">
                         Skala
@@ -108,53 +106,41 @@ export function MonthlyForm({
                       <InfoTooltip>{TOOLTIP_CONTENT.skladkaChorobowa}</InfoTooltip>
                     </span>
                   </th>
-                  <th
-                    className="text-end border-start"
-                    style={{ backgroundColor: '#e8f5e9' }}
-                  >
+                  <th className="text-end border-start bg-ryczalt">
                     <span className="d-flex align-items-center justify-content-end">
                       <span className="d-none d-xl-inline">Zdrowotna</span>
                       <span className="d-xl-none">Zdr.</span>
                       <InfoTooltip>{TOOLTIP_CONTENT.ryczaltZdrowotna}</InfoTooltip>
                     </span>
                   </th>
-                  <th className="text-end" style={{ backgroundColor: '#e8f5e9' }}>
+                  <th className="text-end bg-ryczalt">
                     <span className="d-flex align-items-center justify-content-end">
                       <span className="d-none d-xl-inline">Podatek</span>
                       <span className="d-xl-none">Podat.</span>
                       <InfoTooltip>{TOOLTIP_CONTENT.ryczaltPodatek}</InfoTooltip>
                     </span>
                   </th>
-                  <th
-                    className="text-end fw-bold"
-                    style={{ backgroundColor: '#c8e6c9' }}
-                  >
+                  <th className="text-end fw-bold bg-ryczalt-strong">
                     <span className="d-flex align-items-center justify-content-end">
                       Netto
                       <InfoTooltip>{TOOLTIP_CONTENT.ryczaltNetto}</InfoTooltip>
                     </span>
                   </th>
-                  <th
-                    className="text-end border-start"
-                    style={{ backgroundColor: '#e3f2fd' }}
-                  >
+                  <th className="text-end border-start bg-skala">
                     <span className="d-flex align-items-center justify-content-end">
                       <span className="d-none d-xl-inline">Zdrowotna</span>
                       <span className="d-xl-none">Zdr.</span>
                       <InfoTooltip>{TOOLTIP_CONTENT.skalaZdrowotna}</InfoTooltip>
                     </span>
                   </th>
-                  <th className="text-end" style={{ backgroundColor: '#e3f2fd' }}>
+                  <th className="text-end bg-skala">
                     <span className="d-flex align-items-center justify-content-end">
                       <span className="d-none d-xl-inline">Podatek</span>
                       <span className="d-xl-none">Podat.</span>
                       <InfoTooltip>{TOOLTIP_CONTENT.skalaPodatek}</InfoTooltip>
                     </span>
                   </th>
-                  <th
-                    className="text-end fw-bold"
-                    style={{ backgroundColor: '#bbdefb' }}
-                  >
+                  <th className="text-end fw-bold bg-skala-strong">
                     <span className="d-flex align-items-center justify-content-end">
                       Netto
                       <InfoTooltip>{TOOLTIP_CONTENT.skalaNetto}</InfoTooltip>

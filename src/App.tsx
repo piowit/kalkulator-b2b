@@ -3,6 +3,7 @@ import { MonthlyForm } from './components/MonthlyForm';
 import { ResultsPanel } from './components/ResultsPanel';
 import { SickLeavePanel } from './components/SickLeavePanel';
 import { compare } from './calculations';
+import { useTheme } from './hooks/useTheme';
 import type { MonthData, CalculationResult } from './types';
 
 const STORAGE_KEY = 'podatki-b2b-calculator';
@@ -45,6 +46,7 @@ function loadFromStorage(): { months: MonthData[]; isFromStorage: boolean } {
 }
 
 function App() {
+  const { theme, toggleTheme } = useTheme();
   const [months, setMonths] = useState<MonthData[]>(() => loadFromStorage().months);
   const [result, setResult] = useState<CalculationResult | null>(() => {
     // Zawsze oblicz wyniki przy starcie (domyślne dane lub zapisane)
@@ -104,9 +106,17 @@ function App() {
   };
 
   return (
-    <div className="min-vh-100 bg-light py-4">
+    <div className="min-vh-100 bg-body py-4">
       <div className="container">
-        <header className="text-center mb-4">
+        <header className="text-center mb-4 position-relative">
+          <button
+            type="button"
+            className="btn btn-outline-secondary btn-sm position-absolute top-0 end-0"
+            onClick={toggleTheme}
+            title={theme === 'light' ? 'Włącz tryb ciemny' : 'Włącz tryb jasny'}
+          >
+            {theme === 'light' ? '🌙' : '☀️'}
+          </button>
           <h1 className="h2">Kalkulator Podatkowy B2B</h1>
           <p className="text-muted">
             Porównanie: Ryczałt 12% vs Skala Podatkowa (rok 2026)

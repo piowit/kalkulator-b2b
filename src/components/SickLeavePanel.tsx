@@ -281,7 +281,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
               <strong>Podatek od zasiłku — ważna różnica!</strong>
               <div className="row mt-2">
                 <div className="col-md-6">
-                  <div className="p-2 rounded" style={{ backgroundColor: '#e8f5e9' }}>
+                  <div className="p-2 rounded bg-ryczalt">
                     <strong>Ryczałtowiec:</strong>
                     <br />
                     Zasiłek = jedyny przychód na skali
@@ -292,7 +292,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                   </div>
                 </div>
                 <div className="col-md-6">
-                  <div className="p-2 rounded" style={{ backgroundColor: '#e3f2fd' }}>
+                  <div className="p-2 rounded bg-skala">
                     <strong>Skala podatkowa:</strong>
                     <br />
                     Zasiłek dodaje się do dochodu z firmy
@@ -401,8 +401,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
             <div className="row g-3 mb-4">
               <div className="col-md-6">
                 <div
-                  className="border rounded p-3"
-                  style={{ backgroundColor: '#fff3cd' }}
+                  className="border rounded p-3 bg-warning-subtle-custom"
                 >
                   <div className="d-flex justify-content-between align-items-start">
                     <div>
@@ -430,7 +429,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style={{ backgroundColor: '#e8f5e9' }}>
+                        <tr className="bg-ryczalt">
                           <td><strong>Ryczałt</strong> <span className="text-muted">(~0% PIT)</span></td>
                           {exampleDaysOptions.map((days) => (
                             <td key={days} className="text-end fw-bold text-success">
@@ -438,7 +437,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                             </td>
                           ))}
                         </tr>
-                        <tr style={{ backgroundColor: '#e3f2fd' }}>
+                        <tr className="bg-skala">
                           <td><strong>Skala</strong> <span className="text-muted">(−{Math.round(marginalTaxRateSkala * 100)}%)</span></td>
                           {exampleDaysOptions.map((days) => (
                             <td key={days} className="text-end fw-bold text-primary">
@@ -453,8 +452,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
               </div>
               <div className="col-md-6">
                 <div
-                  className="border rounded p-3"
-                  style={{ backgroundColor: '#d1e7dd' }}
+                  className="border rounded p-3 bg-success-subtle-custom"
                 >
                   <div className="d-flex justify-content-between align-items-start">
                     <div>
@@ -494,7 +492,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr style={{ backgroundColor: '#e8f5e9' }}>
+                        <tr className="bg-ryczalt">
                           <td><strong>Ryczałt</strong> <span className="text-muted">(~0% PIT)</span></td>
                           {exampleDaysOptions.map((days) => (
                             <td key={days} className="text-end fw-bold text-success">
@@ -502,7 +500,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                             </td>
                           ))}
                         </tr>
-                        <tr style={{ backgroundColor: '#e3f2fd' }}>
+                        <tr className="bg-skala">
                           <td><strong>Skala</strong> <span className="text-muted">(−{Math.round(marginalTaxRateSkala * 100)}%)</span></td>
                           {exampleDaysOptions.map((days) => (
                             <td key={days} className="text-end fw-bold text-primary">
@@ -552,7 +550,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
             >
             <div className="table-responsive">
               <table className="table table-sm table-bordered mb-0">
-                <thead className="table-light">
+                <thead className="table-header-adaptive">
                   <tr>
                     <th>Składka ({zusType === 'maly_zus' ? 'Mały' : 'Duży'} ZUS)</th>
                     <th className="text-end">Pełny miesiąc</th>
@@ -626,7 +624,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                     })}
                   </tr>
                   {hasVoluntarySickness && (
-                    <tr className="table-info">
+                    <tr className="table-row-info">
                       <td>
                         <strong>Chorobowa</strong>
                         <small className="text-muted ms-1">(2,45%, dobrowolna)</small>
@@ -667,7 +665,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                       })}
                     </tr>
                   )}
-                  <tr className="table-warning">
+                  <tr className="table-row-warning">
                     <td>
                       Składka zdrowotna
                       <InfoTooltip>
@@ -692,7 +690,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                     ))}
                   </tr>
                 </tbody>
-                <tfoot className="table-success">
+                <tfoot className="table-row-success">
                   <tr>
                     <td className="fw-bold">Suma składek społecznych</td>
                     <td className="text-end fw-bold">{formatPLN(calculateBreakdown(0).totalFull)}</td>
@@ -739,7 +737,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
             >
             <div className="table-responsive">
               <table className="table table-sm table-bordered mb-0">
-                <thead className="table-light">
+                <thead className="table-header-adaptive">
                   <tr>
                     <th rowSpan={2}>Składnik</th>
                     {exampleDaysOptions.map((days) => (
@@ -751,8 +749,8 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                   <tr>
                     {exampleDaysOptions.map((days) => (
                       <>
-                        <th key={`${days}-ryczalt`} className="text-end small" style={{ backgroundColor: '#e8f5e9' }}>Ryczałt</th>
-                        <th key={`${days}-skala`} className="text-end small" style={{ backgroundColor: '#e3f2fd' }}>Skala</th>
+                        <th key={`${days}-ryczalt`} className="text-end small bg-ryczalt">Ryczałt</th>
+                        <th key={`${days}-skala`} className="text-end small bg-skala">Skala</th>
                       </>
                     ))}
                   </tr>
@@ -764,10 +762,10 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                     </td>
                     {exampleDaysOptions.map((days) => (
                       <>
-                        <td key={`${days}-ryczalt`} className="text-end" style={{ backgroundColor: '#e8f5e9' }}>
+                        <td key={`${days}-ryczalt`} className="text-end bg-ryczalt">
                           {formatPLN(daily80Brutto * days)}
                         </td>
-                        <td key={`${days}-skala`} className="text-end" style={{ backgroundColor: '#e3f2fd' }}>
+                        <td key={`${days}-skala`} className="text-end bg-skala">
                           {formatPLN(daily80NettoSkala * days)}
                         </td>
                       </>
@@ -779,16 +777,16 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                     </td>
                     {exampleDaysOptions.map((days) => (
                       <>
-                        <td key={`${days}-ryczalt`} className="text-end" style={{ backgroundColor: '#e8f5e9' }}>
+                        <td key={`${days}-ryczalt`} className="text-end bg-ryczalt">
                           {formatPLN(daily100Brutto * days)}
                         </td>
-                        <td key={`${days}-skala`} className="text-end" style={{ backgroundColor: '#e3f2fd' }}>
+                        <td key={`${days}-skala`} className="text-end bg-skala">
                           {formatPLN(daily100NettoSkala * days)}
                         </td>
                       </>
                     ))}
                   </tr>
-                  <tr className="table-success">
+                  <tr className="table-row-success">
                     <td>Oszczędność na składkach ZUS</td>
                     {exampleDaysOptions.map((days) => {
                       const { totalFull, totalReduced } = calculateBreakdown(days);
@@ -815,10 +813,10 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                       const totalSkala = daily80NettoSkala * days + zusSavings;
                       return (
                         <>
-                          <td key={`${days}-ryczalt`} className="text-end fw-bold" style={{ backgroundColor: '#c8e6c9' }}>
+                          <td key={`${days}-ryczalt`} className="text-end fw-bold bg-ryczalt-strong">
                             {formatPLN(totalRyczalt)}
                           </td>
-                          <td key={`${days}-skala`} className="text-end fw-bold" style={{ backgroundColor: '#bbdefb' }}>
+                          <td key={`${days}-skala`} className="text-end fw-bold bg-skala-strong">
                             {formatPLN(totalSkala)}
                           </td>
                         </>
@@ -837,10 +835,10 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                       const totalSkala = daily100NettoSkala * days + zusSavings;
                       return (
                         <>
-                          <td key={`${days}-ryczalt`} className="text-end fw-bold" style={{ backgroundColor: '#c8e6c9' }}>
+                          <td key={`${days}-ryczalt`} className="text-end fw-bold bg-ryczalt-strong">
                             {formatPLN(totalRyczalt)}
                           </td>
-                          <td key={`${days}-skala`} className="text-end fw-bold" style={{ backgroundColor: '#bbdefb' }}>
+                          <td key={`${days}-skala`} className="text-end fw-bold bg-skala-strong">
                             {formatPLN(totalSkala)}
                           </td>
                         </>
@@ -884,7 +882,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
               return (
                 <div className="row g-3 mb-4">
                   <div className="col-md-6">
-                    <div className="border rounded p-3" style={{ backgroundColor: '#e8f5e9' }}>
+                    <div className="border rounded p-3 bg-ryczalt">
                       <div className="fw-bold text-success">Ryczałt</div>
                       <div className="small text-muted mb-2">
                         Zasiłek ~bez podatku (kwota wolna 30 000 zł)
@@ -904,7 +902,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                     </div>
                   </div>
                   <div className="col-md-6">
-                    <div className="border rounded p-3" style={{ backgroundColor: '#e3f2fd' }}>
+                    <div className="border rounded p-3 bg-skala">
                       <div className="fw-bold text-primary">Skala podatkowa</div>
                       <div className="small text-muted mb-2">
                         Zasiłek −{Math.round(marginalTaxRateSkala * 100)}% podatku
@@ -924,7 +922,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                     </div>
                   </div>
                   <div className="col-12">
-                    <div className="alert alert-light small mb-0">
+                    <div className="alert alert-secondary small mb-0">
                       <strong>Wniosek:</strong> Przy {zusType === 'maly_zus' ? 'Małym' : 'Dużym'} ZUS,
                       składka chorobowa ({formatPLN(zusData.chorobowa)}/mies.) zwraca się po{' '}
                       <strong className="text-success">{breakEvenRyczalt} dniach</strong> L4 dla ryczałtu
@@ -1047,7 +1045,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                   return (
                     <div className="table-responsive">
                       <table className="table table-sm table-bordered mb-3">
-                        <thead className="table-light">
+                        <thead className="table-header-adaptive">
                           <tr>
                             <th></th>
                             <th className="text-end">Standardowa<br/><small className="text-muted fw-normal">{formatPLN(BIG_ZUS_BASE)}</small></th>
@@ -1068,13 +1066,13 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                             <td className="text-end">{formatPLN(increasedZus.razemZChorobowa * 12)}</td>
                             <td className="text-end text-danger">+{formatPLN(extraYearlyCost)}</td>
                           </tr>
-                          <tr className="table-info">
+                          <tr className="table-row-info">
                             <td>Zasiłek 80% dziennie (netto)</td>
                             <td className="text-end">{formatPLN(standardDaily80Netto)}</td>
                             <td className="text-end">{formatPLN(increasedDaily80Netto)}</td>
                             <td className="text-end text-success">+{formatPLN(extraDailyBenefit)}</td>
                           </tr>
-                          <tr className="table-warning">
+                          <tr className="table-row-warning">
                             <td>
                               <strong>Break-even</strong>
                               <InfoTooltip>
