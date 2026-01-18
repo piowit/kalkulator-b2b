@@ -43,6 +43,9 @@ export function MonthlyForm({
         </div>
       </div>
       <div className="card-body p-0">
+        <p className="text-muted small mb-0 px-3 pt-3">
+          Wpisz przychód netto z faktur (kwota bez VAT, którą otrzymujesz od klienta)
+        </p>
         <div className="table-responsive">
           <table className="table table-hover table-sm mb-0">
             <thead className="table-light">
@@ -50,7 +53,10 @@ export function MonthlyForm({
                 <th>Miesiąc</th>
                 <th>Przychód</th>
                 <th>ZUS</th>
-                <th className="text-center">Chor.</th>
+                <th className="text-center">
+                  <span className="d-none d-lg-inline">Chorobowa</span>
+                  <span className="d-lg-none">Chor.</span>
+                </th>
                 <th></th>
                 {hasBreakdowns && (
                   <>
@@ -97,7 +103,8 @@ export function MonthlyForm({
                   </th>
                   <th className="text-end text-muted">
                     <span className="d-flex align-items-center justify-content-end">
-                      Chor.
+                      <span className="d-none d-xl-inline">Chorobowa</span>
+                      <span className="d-xl-none">Chor.</span>
                       <InfoTooltip>{TOOLTIP_CONTENT.skladkaChorobowa}</InfoTooltip>
                     </span>
                   </th>
@@ -106,13 +113,15 @@ export function MonthlyForm({
                     style={{ backgroundColor: '#e8f5e9' }}
                   >
                     <span className="d-flex align-items-center justify-content-end">
-                      Zdr.
+                      <span className="d-none d-xl-inline">Zdrowotna</span>
+                      <span className="d-xl-none">Zdr.</span>
                       <InfoTooltip>{TOOLTIP_CONTENT.ryczaltZdrowotna}</InfoTooltip>
                     </span>
                   </th>
                   <th className="text-end" style={{ backgroundColor: '#e8f5e9' }}>
                     <span className="d-flex align-items-center justify-content-end">
-                      Podat.
+                      <span className="d-none d-xl-inline">Podatek</span>
+                      <span className="d-xl-none">Podat.</span>
                       <InfoTooltip>{TOOLTIP_CONTENT.ryczaltPodatek}</InfoTooltip>
                     </span>
                   </th>
@@ -130,13 +139,15 @@ export function MonthlyForm({
                     style={{ backgroundColor: '#e3f2fd' }}
                   >
                     <span className="d-flex align-items-center justify-content-end">
-                      Zdr.
+                      <span className="d-none d-xl-inline">Zdrowotna</span>
+                      <span className="d-xl-none">Zdr.</span>
                       <InfoTooltip>{TOOLTIP_CONTENT.skalaZdrowotna}</InfoTooltip>
                     </span>
                   </th>
                   <th className="text-end" style={{ backgroundColor: '#e3f2fd' }}>
                     <span className="d-flex align-items-center justify-content-end">
-                      Podat.
+                      <span className="d-none d-xl-inline">Podatek</span>
+                      <span className="d-xl-none">Podat.</span>
                       <InfoTooltip>{TOOLTIP_CONTENT.skalaPodatek}</InfoTooltip>
                     </span>
                   </th>

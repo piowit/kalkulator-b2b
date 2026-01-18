@@ -54,8 +54,73 @@ function getZusBase(zusType: 'ulga_na_start' | 'maly_zus' | 'duzy_zus'): number 
   }
 }
 
+// Komponent nagłówka sekcji z możliwością zwijania
+function CollapsibleSection({
+  title,
+  tooltip,
+  expanded,
+  onToggle,
+  children,
+}: {
+  title: string;
+  tooltip?: React.ReactNode;
+  expanded: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="mb-3">
+      <h6
+        className="mb-0 d-flex align-items-center justify-content-between"
+        style={{ cursor: 'pointer' }}
+        onClick={onToggle}
+      >
+        <span className="d-flex align-items-center">
+          <span
+            className="me-2"
+            style={{
+              display: 'inline-block',
+              width: '16px',
+              transition: 'transform 0.2s',
+              transform: expanded ? 'rotate(90deg)' : 'rotate(0deg)',
+            }}
+          >
+            ▶
+          </span>
+          {title}
+          {tooltip && <span onClick={(e) => e.stopPropagation()}>{tooltip}</span>}
+        </span>
+        <span className="badge bg-secondary small">{expanded ? 'zwiń' : 'rozwiń'}</span>
+      </h6>
+      <div
+        style={{
+          maxHeight: expanded ? '2000px' : '0',
+          overflow: 'hidden',
+          transition: 'max-height 0.3s ease-in-out',
+          marginTop: expanded ? '0.75rem' : '0',
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export function SickLeavePanel({ months }: SickLeavePanelProps) {
   const [increasedBase, setIncreasedBase] = useState(BIG_ZUS_BASE);
+
+  // Stan rozwinięcia sekcji
+  const [expandedSections, setExpandedSections] = useState({
+    wysokoscZasilku: true,
+    oplacalnosc: true,
+    pomniejszenieSkladek: false,
+    lacznaKorzysc: false,
+    podwyzszeniePodstawy: false,
+  });
+
+  const toggleSection = (section: keyof typeof expandedSections) => {
+    setExpandedSections((prev) => ({ ...prev, [section]: !prev[section] }));
+  };
 
   // Oblicz średni miesięczny przychód
   const monthsWithRevenue = months.filter((m) => m.revenue > 0);
@@ -308,27 +373,31 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
             </div>
 
             {/* Zasiłek 80% vs 100% */}
-            <h6 className="mb-3">
-              Wysokość zasiłku
-              <InfoTooltip>
-                <>
-                  <strong>Różnica w opodatkowaniu zasiłku</strong>
-                  {'\n\n'}
-                  <strong>Ryczałtowiec:</strong>
-                  {'\n'}Zasiłek to jedyny przychód na skali.
-                  {'\n'}Korzysta z kwoty wolnej 30 000 zł.
-                  {'\n'}Przy krótkim L4 → ~0% podatku!
-                  {'\n\n'}
-                  <strong>Skala podatkowa:</strong>
-                  {'\n'}Zasiłek dodaje się do dochodu z firmy.
-                  {'\n'}Kwota wolna już wykorzystana.
-                  {'\n'}Podatek: {Math.round(marginalTaxRateSkala * 100)}%
-                  {'\n\n'}
-                  <strong>Uwaga:</strong> Zasiłek NIE podlega składkom ZUS ani
-                  składce zdrowotnej — tylko podatkowi dochodowemu.
-                </>
-              </InfoTooltip>
-            </h6>
+            <CollapsibleSection
+              title="Wysokość zasiłku"
+              tooltip={
+                <InfoTooltip>
+                  <>
+                    <strong>Różnica w opodatkowaniu zasiłku</strong>
+                    {'\n\n'}
+                    <strong>Ryczałtowiec:</strong>
+                    {'\n'}Zasiłek to jedyny przychód na skali.
+                    {'\n'}Korzysta z kwoty wolnej 30 000 zł.
+                    {'\n'}Przy krótkim L4 → ~0% podatku!
+                    {'\n\n'}
+                    <strong>Skala podatkowa:</strong>
+                    {'\n'}Zasiłek dodaje się do dochodu z firmy.
+                    {'\n'}Kwota wolna już wykorzystana.
+                    {'\n'}Podatek: {Math.round(marginalTaxRateSkala * 100)}%
+                    {'\n\n'}
+                    <strong>Uwaga:</strong> Zasiłek NIE podlega składkom ZUS ani
+                    składce zdrowotnej — tylko podatkowi dochodowemu.
+                  </>
+                </InfoTooltip>
+              }
+              expanded={expandedSections.wysokoscZasilku}
+              onToggle={() => toggleSection('wysokoscZasilku')}
+            >
             <div className="row g-3 mb-4">
               <div className="col-md-6">
                 <div
@@ -447,35 +516,40 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                 </div>
               </div>
             </div>
+            </CollapsibleSection>
 
             {/* Pomniejszenie składek */}
-            <h6 className="mb-3">
-              Pomniejszenie składek za okres choroby
-              <InfoTooltip>
-                <>
-                  <strong>Składki społeczne za okres L4</strong>
-                  {'\n\n'}
-                  Gdy przebywasz na L4, składki społeczne są proporcjonalnie
-                  mniejsze — płacisz tylko za dni, w których prowadziłeś
-                  działalność.
-                  {'\n\n'}
-                  <strong>Które składki są pomniejszane:</strong>
-                  {'\n'}• Emerytalna (19,52% podstawy)
-                  {'\n'}• Rentowa (8% podstawy)
-                  {'\n'}• Wypadkowa (1,67% podstawy)
-                  {'\n'}• Chorobowa (2,45% podstawy) — jeśli opłacana
-                  {'\n'}• Fundusz Pracy (2,45%) — tylko przy Dużym ZUS
-                  {'\n\n'}
-                  <strong>Przykłady:</strong>
-                  {'\n'}• 5 dni L4 → płacisz 25/30 = 83,33% składek
-                  {'\n'}• 7 dni L4 → płacisz 23/30 = 76,67% składek
-                  {'\n'}• 30 dni L4 → płacisz 0/30 = 0% składek
-                  {'\n\n'}
-                  <strong>Uwaga:</strong> Składka zdrowotna jest niepodzielna —
-                  płacisz pełną kwotę nawet za 1 dzień działalności w miesiącu.
-                </>
-              </InfoTooltip>
-            </h6>
+            <CollapsibleSection
+              title="Pomniejszenie składek za okres choroby"
+              tooltip={
+                <InfoTooltip>
+                  <>
+                    <strong>Składki społeczne za okres L4</strong>
+                    {'\n\n'}
+                    Gdy przebywasz na L4, składki społeczne są proporcjonalnie
+                    mniejsze — płacisz tylko za dni, w których prowadziłeś
+                    działalność.
+                    {'\n\n'}
+                    <strong>Które składki są pomniejszane:</strong>
+                    {'\n'}• Emerytalna (19,52% podstawy)
+                    {'\n'}• Rentowa (8% podstawy)
+                    {'\n'}• Wypadkowa (1,67% podstawy)
+                    {'\n'}• Chorobowa (2,45% podstawy) — jeśli opłacana
+                    {'\n'}• Fundusz Pracy (2,45%) — tylko przy Dużym ZUS
+                    {'\n\n'}
+                    <strong>Przykłady:</strong>
+                    {'\n'}• 5 dni L4 → płacisz 25/30 = 83,33% składek
+                    {'\n'}• 7 dni L4 → płacisz 23/30 = 76,67% składek
+                    {'\n'}• 30 dni L4 → płacisz 0/30 = 0% składek
+                    {'\n\n'}
+                    <strong>Uwaga:</strong> Składka zdrowotna jest niepodzielna —
+                    płacisz pełną kwotę nawet za 1 dzień działalności w miesiącu.
+                  </>
+                </InfoTooltip>
+              }
+              expanded={expandedSections.pomniejszenieSkladek}
+              onToggle={() => toggleSection('pomniejszenieSkladek')}
+            >
             <div className="table-responsive">
               <table className="table table-sm table-bordered mb-0">
                 <thead className="table-light">
@@ -638,26 +712,31 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                 </tfoot>
               </table>
             </div>
+            </CollapsibleSection>
 
             {/* Podsumowanie łącznej korzyści */}
-            <h6 className="mt-4 mb-3">
-              Łączna korzyść finansowa z L4
-              <InfoTooltip>
-                <>
-                  <strong>Co składa się na korzyść z L4?</strong>
-                  {'\n\n'}
-                  <strong>1. Zasiłek chorobowy (netto)</strong>
-                  {'\n'}Kwota wypłacana przez ZUS po odjęciu podatku dochodowego.
-                  {'\n'}• Ryczałt: ~0% PIT (kwota wolna 30 000 zł)
-                  {'\n'}• Skala: {Math.round(marginalTaxRateSkala * 100)}% PIT (kwota wolna zużyta)
-                  {'\n\n'}
-                  <strong>2. Oszczędność na składkach ZUS</strong>
-                  {'\n'}Składki społeczne są proporcjonalnie mniejsze za okres L4.
-                  {'\n\n'}
-                  <strong>Łączna korzyść</strong> = zasiłek netto + oszczędność ZUS
-                </>
-              </InfoTooltip>
-            </h6>
+            <CollapsibleSection
+              title="Łączna korzyść finansowa z L4"
+              tooltip={
+                <InfoTooltip>
+                  <>
+                    <strong>Co składa się na korzyść z L4?</strong>
+                    {'\n\n'}
+                    <strong>1. Zasiłek chorobowy (netto)</strong>
+                    {'\n'}Kwota wypłacana przez ZUS po odjęciu podatku dochodowego.
+                    {'\n'}• Ryczałt: ~0% PIT (kwota wolna 30 000 zł)
+                    {'\n'}• Skala: {Math.round(marginalTaxRateSkala * 100)}% PIT (kwota wolna zużyta)
+                    {'\n\n'}
+                    <strong>2. Oszczędność na składkach ZUS</strong>
+                    {'\n'}Składki społeczne są proporcjonalnie mniejsze za okres L4.
+                    {'\n\n'}
+                    <strong>Łączna korzyść</strong> = zasiłek netto + oszczędność ZUS
+                  </>
+                </InfoTooltip>
+              }
+              expanded={expandedSections.lacznaKorzysc}
+              onToggle={() => toggleSection('lacznaKorzysc')}
+            >
             <div className="table-responsive">
               <table className="table table-sm table-bordered mb-0">
                 <thead className="table-light">
@@ -771,22 +850,27 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                 </tfoot>
               </table>
             </div>
+            </CollapsibleSection>
 
             {/* Opłacalność składki chorobowej */}
-            <h6 className="mt-4 mb-3">
-              Czy składka chorobowa się opłaca?
-              <InfoTooltip>
-                <>
-                  <strong>Analiza opłacalności składki chorobowej</strong>
-                  {'\n\n'}
-                  Ile dni L4 w roku musisz mieć, żeby odzyskać koszt
-                  dobrowolnej składki chorobowej?
-                  {'\n\n'}
-                  <strong>Wzór:</strong>
-                  {'\n'}Break-even = Roczny koszt składki ÷ Dzienny zasiłek netto
-                </>
-              </InfoTooltip>
-            </h6>
+            <CollapsibleSection
+              title="Czy składka chorobowa się opłaca?"
+              tooltip={
+                <InfoTooltip>
+                  <>
+                    <strong>Analiza opłacalności składki chorobowej</strong>
+                    {'\n\n'}
+                    Ile dni L4 w roku musisz mieć, żeby odzyskać koszt
+                    dobrowolnej składki chorobowej?
+                    {'\n\n'}
+                    <strong>Wzór:</strong>
+                    {'\n'}Break-even = Roczny koszt składki ÷ Dzienny zasiłek netto
+                  </>
+                </InfoTooltip>
+              }
+              expanded={expandedSections.oplacalnosc}
+              onToggle={() => toggleSection('oplacalnosc')}
+            >
             {(() => {
               // Roczny koszt składki chorobowej
               const yearlySicknessCost = zusData.chorobowa * 12;
@@ -853,12 +937,13 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                 </div>
               );
             })()}
+            </CollapsibleSection>
 
             {/* Analiza podwyższonej podstawy */}
             {zusType === 'duzy_zus' && (
-              <>
-                <h6 className="mt-4 mb-3">
-                  Opcjonalnie: Podwyższenie podstawy składek
+              <CollapsibleSection
+                title="Opcjonalnie: Podwyższenie podstawy składek"
+                tooltip={
                   <InfoTooltip>
                     <>
                       <strong>Czy warto płacić WYŻSZE składki?</strong>
@@ -879,7 +964,10 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                       ubezpieczenie chorobowe (to powyżej).
                     </>
                   </InfoTooltip>
-                </h6>
+                }
+                expanded={expandedSections.podwyzszeniePodstawy}
+                onToggle={() => toggleSection('podwyzszeniePodstawy')}
+              >
 
                 <div className="row g-3 mb-3">
                   <div className="col-md-6">
@@ -1044,7 +1132,7 @@ export function SickLeavePanel({ months }: SickLeavePanelProps) {
                     </div>
                   );
                 })()}
-              </>
+              </CollapsibleSection>
             )}
 
             <div className="alert alert-info mt-3 mb-0 small">
